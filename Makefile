@@ -2,7 +2,7 @@ CC = x86_64-w64-mingw32-gcc
 STRIP = strip -s
 RM = rm
 
-CFLAGS = -shared
+CFLAGS = -shared -O3
 
 EXES = detect_game
 EXT  = .dll

@@ -38,9 +38,6 @@ __declspec(dllexport) int get_running_fullscreen_game_path(char *buffer,
   HWND hwnd = NULL;
   while ((hwnd = FindWindowEx(NULL, hwnd, NULL, NULL)) != NULL) {
     if (TestFullscreen(hwnd)) {
-      TCHAR windowTitle[MAX_TITLE_LENGTH];
-      GetWindowText(hwnd, windowTitle, MAX_TITLE_LENGTH);
-
       DWORD processId;
       GetWindowThreadProcessId(hwnd, &processId);
 
