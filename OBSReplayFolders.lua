@@ -17,8 +17,8 @@ end
 
 function obs_frontend_callback(event)
 	if event == obs.OBS_FRONTEND_EVENT_REPLAY_BUFFER_SAVED then
-		local path = get_replay_buffer_output()
 		local folder = get_running_game_title()
+		local path = get_replay_buffer_output()
 		if path ~= nil and folder ~= nil then
 			print("Moving " .. path .. " to " .. folder)
 			move(path, folder)
