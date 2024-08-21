@@ -13,7 +13,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Build with Make
+      - name: Build DLL
         run: make
 
       - name: Create ZIP file
