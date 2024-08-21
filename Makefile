@@ -1,15 +1,15 @@
-CC = x86_64-w64-mingw32-gcc
+CC    = x86_64-w64-mingw32-gcc
 STRIP = strip -s
-RM = rm
+RM    = rm
 
 CFLAGS = -shared -O3
 
-EXES = detect_game
-EXT  = .dll
+SRC = detect_game
+EXT = .dll
 
-all: $(EXES)
+all: $(SRC)
 
-$(EXES): %: %.c $(DEPS)
+$(SRC): %: %.c $(DEPS)
 	$(CC) $^ -o $@$(EXT) $(CFLAGS)
 	$(STRIP) $@$(EXT)
 
@@ -17,4 +17,4 @@ $(EXES): %: %.c $(DEPS)
 	$(CC) -c $< -o $@ $(CFLAGS)
 
 clean:
-	@$(RM) *.o $(addsuffix $(EXT), $(EXES)) 2>/dev/null |:
+	@$(RM) $(addsuffix $(EXT), $(SRC)) 2>/dev/null |:
