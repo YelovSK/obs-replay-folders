@@ -4,6 +4,8 @@
 
 #define MAX_TITLE_LENGTH 256
 static const char prefix[] = "C:\\Windows\\";
+static const char windowsapps[] =
+    "C:\\Program Files\\Common Files\\microsoft shared\\";
 static const char gameBarExe[] = "GameBar.exe";
 
 BOOL TestFullscreen(HWND hwnd) {
@@ -62,6 +64,11 @@ __declspec(dllexport) int get_running_fullscreen_game_path(char *buffer,
 
       ConvertTCHARToChar(executablePath, charPath, exe_bufferSize);
       int result = strncmp(charPath, prefix, 11);
+      if (result == 0) {
+        continue;
+      }
+
+      result = strncmp(charPath, windowsapps, 47);
       if (result == 0) {
         continue;
       }
