@@ -2,7 +2,7 @@ obs = obslua
 
 function script_description()
 	return [[Saves replays to sub-folders using the current fullscreen video game executable name.
-	
+
 Author: redraskal]]
 end
 
@@ -12,7 +12,6 @@ function script_load()
 		int get_running_fullscreen_game_path(char* buffer, int bufferSize)
 	]]
 	detect_game = ffi.load(script_path() .. "detect_game.dll")
-	print(get_running_game_title())
 	obs.obs_frontend_add_event_callback(obs_frontend_callback)
 end
 
