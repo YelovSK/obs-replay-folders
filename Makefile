@@ -1,7 +1,8 @@
 CC = x86_64-w64-mingw32-gcc
+STRIP = strip -s
 RM = rm
 
-CFLAGS = -shared -lpsapi -luser32
+CFLAGS = -shared
 
 EXES = detect_game
 EXT  = .dll
@@ -10,6 +11,7 @@ all: $(EXES)
 
 $(EXES): %: %.c $(DEPS)
 	$(CC) $^ -o $@$(EXT) $(CFLAGS)
+	$(STRIP) $@$(EXT)
 
 %.o: %.c
 	$(CC) -c $< -o $@ $(CFLAGS)
