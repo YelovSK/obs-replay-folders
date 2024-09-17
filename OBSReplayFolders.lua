@@ -57,7 +57,12 @@ function get_running_game_title()
 		end
 		i = i - 1
 	end
-	return result:sub(i + 1, max)
+	local title = result:sub(i + 1, max)
+
+	-- Trim "-Win64-Shipping" if it exists
+	local trimmed_title = title:gsub("-Win64%-Shipping$", "")
+
+	return trimmed_title
 end
 
 function move(path, folder)
