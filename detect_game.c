@@ -14,6 +14,9 @@ BOOL TestFullscreen(HWND hwnd) {
   if (!GetWindowPlacement(hwnd, &wp)) {
     return FALSE;
   }
+  if (!IsWindowVisible(hwnd)) {
+    return FALSE;
+  }
   if (IsZoomed(hwnd)) {
     return TRUE;
   }
