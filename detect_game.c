@@ -1,6 +1,23 @@
 #include <windows.h>
 #include <psapi.h>
 
+static const char IGNORE_WINDOWS[] = "C:\\Windows\\";
+static const char IGNORE_MICROSOFT_SHARED[] = "C:\\Program Files\\Common Files\\microsoft shared\\";
+
+BOOL StartsWith(const char *str, const char *prefix) {
+    if (!str || !prefix) {
+        return FALSE;
+    }
+
+    size_t prefix_len = strlen(prefix);
+    size_t str_len = strlen(str);
+    if (prefix_len > str_len) {
+        return FALSE;
+    }
+
+    return strncmp(str, prefix, prefix_len) == 0;
+}
+
 BOOL IsFullscreen(HWND hwnd) {
   WINDOWPLACEMENT wp;
   wp.length = sizeof(WINDOWPLACEMENT);
@@ -59,6 +76,9 @@ __declspec(dllexport) int get_running_fullscreen_game_path(char *buffer,
     char* charPath = (char*)malloc(exe_bufferSize);
 
     ConvertTCHARToChar(executablePath, charPath, exe_bufferSize);
+
+    if (StartsWith(charPath, IGNORE_WINDOWS)) continue;
+    if (StartsWith(charPath, IGNORE_MICROSOFT_SHARED)) continue;
 
     // Use charPath as a regular char array
     strcpy_s(buffer, bufferSize, charPath);
