@@ -1,8 +1,10 @@
 #include <windows.h>
 #include <psapi.h>
 
-static const char IGNORE_WINDOWS[] = "C:\\Windows\\";
-static const char IGNORE_MICROSOFT_SHARED[] = "C:\\Program Files\\Common Files\\microsoft shared\\";
+static const char *IGNORES[] = {
+    "C:\\Windows\\",
+    "C:\\Program Files\\Common Files\\microsoft shared\\"
+};
 
 BOOL StartsWith(const char *str, const char *prefix) {
     if (!str || !prefix) {
@@ -77,8 +79,14 @@ __declspec(dllexport) int get_running_fullscreen_game_path(char *buffer,
 
     ConvertTCHARToChar(executablePath, charPath, exe_bufferSize);
 
-    if (StartsWith(charPath, IGNORE_WINDOWS)) continue;
-    if (StartsWith(charPath, IGNORE_MICROSOFT_SHARED)) continue;
+    BOOL isIgnored = FALSE;
+    for (size_t i = 0; i < sizeof(IGNORES) / sizeof(IGNORES[0]); i++) {
+      if (StartsWith(charPath, IGNORES[i])) {
+        isIgnored = TRUE;
+        break;
+      }
+    }
+    if (isIgnored) continue;
 
     // Use charPath as a regular char array
     strcpy_s(buffer, bufferSize, charPath);
